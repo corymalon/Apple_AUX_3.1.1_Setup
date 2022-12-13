@@ -30,7 +30,9 @@ if ($QEMUProcCk -eq $null){
     Write-Host "You may enter notes about your checkpoint on a single line. Max 1022 char"
     Write-Host ""
     $ckptNotes = Read-Host "Enter notes about your checkpoint"
-    Add-Content -Path "$ckPointDir\notes.txt" -Value $ckptNotes
+    if ($ckptNotes -ne ""){
+        Add-Content -Path "$ckPointDir\notes.txt" -Value $ckptNotes
+    }
 
     # Backup QEMU machine
     $runPath = "$QEMUPath$devPath"
