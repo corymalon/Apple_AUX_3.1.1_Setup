@@ -96,6 +96,19 @@ then
             cp /tmp/bash/bash-aux/bash /bin
             rm -r /tmp/bash
 
+            # Install Pico/Nano with symlink for nano because muscle memory is a thing
+            echo ""
+            echo "Installing Pico/Nano"
+            echo ""
+
+            mkdir /tmp/pine
+            cp /opt/jagubox/Utilities/pine-3.95-aux.tar.gz /tmp/pine
+            cd /tmp/pine
+            gzip -dc pine-3.95-aux.bin.tar.gz | tar xvfmo -
+            cp /tmp/pine/pine-3.95-aux/bin/pico /usr/bin
+            ln -s /usr/bin/pico /usr/bin/nano
+            rm -r /tmp/pine
+
             # Install GNUmake
             echo ""
             echo "Installing GNUmake-3.74"
