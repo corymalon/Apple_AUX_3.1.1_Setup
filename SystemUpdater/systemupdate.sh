@@ -34,6 +34,19 @@ then
 
         then
             clear
+            # Create Backup directories
+
+            echo "Creating Backup Directories"
+            echo "---------------------------"
+            echo ""
+            mkdir /opt/backups
+            mkdir /opt/backups/systemupdate
+            mkdir /opt/backups/systemupdate/usr
+            mkdir /opt/backups/systemupdate/usr/bin
+            mkdir /opt/backups/systemupdate/usr/etc
+            mkdir /opt/backups/systemupdate/etc
+            mkdir /opt/backups/systemupdate/boot.d
+            mkdir /opt/backups/systemupdate/bin
             # Installing Utilities
             # --------------------
 
@@ -78,6 +91,76 @@ then
             cp /tmp/pstree/pstree /usr/bin
             rm -r /tmp/pstree
 
+            # Install Port-Tools-V4
+            echo ""
+            echo "Installing Port-Tools-V4"
+            echo ""
+
+            mkdir /tmp/porttools
+            cp /opt/jagubox/AA.new_files/port-tools-v4.tar.gz /tmp/porttools
+            cd /tmp/porttools
+            gzip -dc port-tools-v4.tar.gz | tar xvfmo -
+
+            # Backup originals
+            mv /bin/bison /opt/backups/systemupdate/bin
+            mv /bin/chgrp /opt/backups/systemupdate/bin
+            mv /bin/chmod /opt/backups/systemupdate/bin
+            mv /bin/chown /opt/backups/systemupdate/bin
+            mv /bin/dd /opt/backups/systemupdate/bin
+            mv /bin/df /opt/backups/systemupdate/bin
+            mv /bin/du /opt/backups/systemupdate/bin
+            mv /bin/flex /opt/backups/systemupdate/bin
+            mv /bin/gchgrp /opt/backups/systemupdate/bin
+            mv /bin/gchmod /opt/backups/systemupdate/bin
+            mv /bin/gchown /opt/backups/systemupdate/bin
+            mv /bin/gdd /opt/backups/systemupdate/bin
+            mv /bin/gdf /opt/backups/systemupdate/bin
+            mv /bin/gdu /opt/backups/systemupdate/bin
+            mv /bin/ginstall /opt/backups/systemupdate/bin
+            mv /bin/gls /opt/backups/systemupdate/bin
+            mv /bin/gmkdir /opt/backups/systemupdate/bin
+            mv /bin/grmdir /opt/backups/systemupdate/bin
+            mv /bin/less /opt/backups/systemupdate/bin
+            mv /bin/lesskey /opt/backups/systemupdate/bin
+            mv /bin/ls /opt/backups/systemupdate/bin
+            mv /bin/make /opt/backups/systemupdate/bin
+            mv /bin/mkdep /opt/backups/systemupdate/bin
+            mv /bin/mkdir /opt/backups/systemupdate/bin
+            mv /bin/ranlib /opt/backups/systemupdate/bin
+            mv /bin/rmdir /opt/backups/systemupdate/bin
+
+            # Copy new
+            cp /tmp/porttools/port-tools/bison /bin
+            cp /tmp/porttools/port-tools/chgrp /bin
+            cp /tmp/porttools/port-tools/chmod /bin
+            cp /tmp/porttools/port-tools/chown /bin
+            cp /tmp/porttools/port-tools/dd /bin
+            cp /tmp/porttools/port-tools/df /bin
+            cp /tmp/porttools/port-tools/du /bin
+            cp /tmp/porttools/port-tools/flex /bin
+            cp /tmp/porttools/port-tools/gchgrp /bin
+            cp /tmp/porttools/port-tools/gchmod /bin
+            cp /tmp/porttools/port-tools/gchown /bin
+            cp /tmp/porttools/port-tools/gdd /bin
+            cp /tmp/porttools/port-tools/gdf /bin
+            cp /tmp/porttools/port-tools/gdu /bin
+            cp /tmp/porttools/port-tools/ginstall /bin
+            cp /tmp/porttools/port-tools/gls /bin
+            cp /tmp/porttools/port-tools/gmkdir /bin
+            cp /tmp/porttools/port-tools/grmdir /bin
+            cp /tmp/porttools/port-tools/less /bin
+            cp /tmp/porttools/port-tools/lesskey /bin
+            cp /tmp/porttools/port-tools/ls /bin
+            cp /tmp/porttools/port-tools/make /bin
+            cp /tmp/porttools/port-tools/mkdep /bin
+            cp /tmp/porttools/port-tools/mkdir /bin
+            cp /tmp/porttools/port-tools/ranlib /bin
+            cp /tmp/porttools/port-tools/rmdir /bin
+
+            # Cleanup
+            rm -r /tmp/pottools
+
+
             # Installing Sys_stuff
             # --------------------
             echo ""
@@ -95,6 +178,19 @@ then
             gzip -dc bash-aux.bin.tar.gz | tar xvfmo -
             cp /tmp/bash/bash-aux/bash /bin
             rm -r /tmp/bash
+
+            # Install GCC 2.7.2
+            echo ""
+            echo "Installing GCC 2.7.2"
+            echo ""
+
+            mkdir /tmp/gcc
+            cp /opt/jagubox/AA.new_files/gcc-2.7.2.bin.tar.gz /tmp/gcc
+            cd /tmp/gcc
+            gzip -dc gcc-2.7.2.bin.tar.gz | tar xvfmo -
+            cd gcc-2.7.2-bin
+            ./install-gcc-aux
+            rm -r /tmp/gcc
 
             # Install Pico/Nano with symlink for nano because muscle memory is a thing
             echo ""
@@ -128,13 +224,8 @@ then
             cp /opt/jagubox/Sys_stuff/telnet-aux.tar.gz /tmp/telnet
             cd /tmp/telnet
             gzip -dc telnet-aux.tar.gz | tar xvfmo -
-            mkdir /opt/backups
-            mkdir /opt/backups/telnet
-            mkdir /opt/backups/telnet/usr
-            mkdir /opt/backups/telnet/usr/bin
-            mkdir /opt/backups/telnet/usr/etc
-            mv /usr/bin/telnet /opt/backups/telnet/usr/bin
-            mv /usr/etc/in.telnetd /opt/backups/telnet/usr/etc
+            mv /usr/bin/telnet /opt/backups/systemupdate/usr/bin
+            mv /usr/etc/in.telnetd /opt/backups/systemupdate/usr/etc
             cp /tmp/telnet/telnet_src/AUX-bins/in.telnetd /usr/etc
             cp /tmp/telnet/telnet_src/AUX-bins/telnet /usr/bin
             rm -r /tmp/telnet
@@ -149,8 +240,7 @@ then
             cd /tmp/inetd
             gzip -dc inetd-1.9.tar.gz | tar xvfmo -
             # Backup inetd
-            mkdir /opt/backups/etc
-            mv /etc/inetd /opt/backups/etc
+            mv /etc/inetd /opt/backups/systemupdate/etc
             cp /tmp/inetd/inetd_src/inetd /etc/inetd
             rm -r /tmp/inetd
 
@@ -182,8 +272,7 @@ then
             
             # Backup running bnet driver
             
-            mkdir /opt/backups/etc/boot.d
-            mv /etc/boot.d/bnet /opt/backups/etc/boot.d
+            mv /etc/boot.d/bnet /opt/backups/systemupdate/etc/boot.d
             
             # Install new bnet driver
             cp /tmp/traceroute/traceroute-aux/bnet-3.1/bnet /etc/boot.d
