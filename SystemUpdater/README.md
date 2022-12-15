@@ -1,5 +1,5 @@
 # Change Log
-The change log is here to depict the current state of the systemupdate.sh script and what packages are autmatically being installed. And general notes.
+The change log is here to depict the current state of the systemupdate.sh script and what packages are automatically being installed. And general notes.
 
 ## 2022-12-14
 * Altered backup structure for preserving original bins
